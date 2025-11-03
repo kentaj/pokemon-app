@@ -1,44 +1,54 @@
-export interface PokemonListItem {
+export type PokemonType = {
+  type: { name: string };
+};
+
+export type PokemonAbility = {
+  ability: { name: string };
+};
+
+export type PokemonListItem = {
   name: string;
   url: string;
-}
+  types: PokemonType[];
+};
 
-export interface PokemonListResponse {
-  results: PokemonListItem[];
-}
-
-export interface PokemonType {
-  slot: number;
-  type: {
-    name: string;
-    url: string;
-  };
-}
-
-export interface PokemonDetail {
-  id: number;
+export type PokemonDetail = {
   name: string;
   height: number;
   weight: number;
-  sprites: {
-    front_default: string;
-  };
+  sprites: { front_default: string };
   types: PokemonType[];
-}
-
-export const fetchGen1List = async (): Promise<PokemonListItem[]> => {
-  const res = await fetch(
-    "https://pokeapi.co/api/v2/pokemon?limit=151&offset=0"
-  );
-  if (!res.ok) throw new Error("Failed to fetch Pokémon list");
-  const data: PokemonListResponse = await res.json();
-  return data.results;
+  abilities: PokemonAbility[];
 };
 
-export const fetchPokemonDetail = async (
-  idOrName: string
-): Promise<PokemonDetail> => {
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${idOrName}`);
-  if (!res.ok) throw new Error("Failed to fetch Pokémon detail");
-  return res.json();
+export const fetchGen1List = async (): Promise<PokemonListItem[]> => {
+  const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+  const data = await res.json();
+
+  const detailed = await Promise.all(
+    data.results.map(async (p: any) => {
+      const detailRes = await fetch(p.url);
+      const detail = await detailRes.json();
+      return {
+        name: p.name,
+        url: p.url,
+        types: detail.types,
+      };
+    })
+  );
+
+  return detailed;
+};
+
+export const fetchPokemonDetail = async (name: string): Promise<PokemonDetail> => {
+  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+  const data = await res.json();
+  return {
+    name: data.name,
+    height: data.height,
+    weight: data.weight,
+    sprites: data.sprites,
+    types: data.types,
+    abilities: data.abilities,
+  };
 };
