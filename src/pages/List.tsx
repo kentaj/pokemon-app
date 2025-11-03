@@ -12,12 +12,12 @@ export default function ListPage() {
   });
 
   if (isLoading) return <Spinner />;
-  if (isError) return <ErrorBox message="Kunde inte ladda listan" />;
+  if (isError) return <ErrorBox message="Couldnt load the page" />;
 
   return (
     <div className="max-w-5xl mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6 text-center text-[var(--color-brand-700)]">
-        Generation 1 Pokémon (151)
+        All Pokemons
       </h1>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {data?.map((p) => (

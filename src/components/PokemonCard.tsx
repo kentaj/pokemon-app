@@ -23,13 +23,13 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
         alt={pokemon.name}
         className="w-20 h-20 object-contain mb-2"
       />
-      <h2 className="text-lg font-semibold capitalize text-[var(--color-brand-700)]">{pokemon.name}</h2>
+      <h2 className="text-lg font-semibold capitalize">{pokemon.name}</h2>
 
       <div className="flex gap-2 mt-2 flex-wrap justify-center">
         {pokemon.types.map((t) => (
           <span
             key={t.type.name}
-            className="px-2 py-1 rounded-full text-sm capitalize bg-[var(--color-brand-100)] text-[var(--color-brand-700)]"
+            className="px-2 py-1 rounded-full text-sm capitalize bg-[var(--color-brand-100)]"
           >
             {t.type.name}
           </span>

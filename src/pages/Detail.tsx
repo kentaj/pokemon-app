@@ -27,13 +27,13 @@ export default function DetailPage() {
           alt={data.name}
           className="w-32 h-32 mb-4"
         />
-        <h1 className="text-3xl font-bold capitalize mb-2 text-[var(--color-brand-700)]">{data.name}</h1>
+        <h1 className="text-3xl font-bold capitalize mb-2">{data.name}</h1>
 
         <div className="flex gap-2 flex-wrap justify-center mb-4">
           {data.types.map((t) => (
             <span
               key={t.type.name}
-              className="px-2 py-1 bg-[var(--color-brand-100)] text-[var(--color-brand-700)] rounded-full text-sm capitalize"
+              className="px-2 py-1 bg-[var(--color-brand-100)] rounded-full text-sm capitalize"
             >
               {t.type.name}
             </span>
