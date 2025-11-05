@@ -26,7 +26,6 @@
     "autoprefixer": "^10.4.20",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "@types/node": "^24.10.0",
-    "@tailwindcss/postcss": "^4.1.16"
+    "@types/node": "^24.10.0"
   }
 }
