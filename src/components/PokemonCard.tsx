@@ -1,4 +1,3 @@
-// src/components/PokemonCard.tsx
 import { Link } from "react-router-dom";
 import { useQueryClient, useQuery } from "@tanstack/react-query";
 import type { PokemonListItem, PokemonDetail } from "../api/poke";
@@ -18,7 +17,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
     staleTime: 1000 * 60 * 10,
   });
 
-  const handleMouseEnter = () => {
+  const prefetchData = () => {
     queryClient.prefetchQuery({
       queryKey: ["pokemon", pokemon.name],
       queryFn: () => fetchPokemonDetail(pokemon.name),
@@ -36,18 +35,19 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
   return (
     <Link
       to={`/pokemon/${pokemon.name}`}
-      onMouseEnter={handleMouseEnter}
+      onMouseEnter={prefetchData}
+      onFocus={prefetchData}
       aria-label={`Visa detaljer för ${pokemon.name}`}
-      className={`relative bg-gradient-to-b ${colorClass} rounded-2xl p-3 shadow-lg hover:scale-105 transition-transform`}
+      className={`relative bg-gradient-to-b ${colorClass} rounded-2xl p-3 shadow-lg hover:scale-105 focus:scale-105 focus:outline-none focus:ring-4 focus:ring-brand-500 transition-transform`}
     >
       <div className="bg-white/90 rounded-xl p-3 flex flex-col items-center">
-        <div className="flex justify-between w-full text-xs font-bold text-gray-700 mb-1">
+        <div className="flex justify-between w-full text-xs font-bold text-gray-800 mb-1">
           <span className="capitalize">{type}</span>
           <span>HP {hp}</span>
         </div>
         <img
           src={imageUrl}
-          alt={pokemon.name}
+          alt={`${pokemon.name} sprite`}
           className="w-20 h-20 object-contain drop-shadow-md"
         />
         <h2 className="text-lg font-bold capitalize text-gray-900 mt-2">

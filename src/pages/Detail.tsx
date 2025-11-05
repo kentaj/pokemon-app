@@ -1,34 +1,27 @@
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPokemonDetail, type PokemonDetail } from "../api/poke";
-import { getStat } from "../utils/pokemon";
 import Spinner from "../components/Spinner";
 import ErrorBox from "../components/ErrorBox";
 import { typeColors } from "../utils/typeColors";
 
+
 export default function DetailPage() {
   const { name } = useParams<{ name: string }>();
-
-  const { data, isLoading, isError, error } = useQuery<PokemonDetail, Error>({
+  const { data, isLoading, isError } = useQuery<PokemonDetail>({
     queryKey: ["pokemon", name],
-    queryFn: () => {
-      if (!name) throw new Error("No pokemon name provided");
-      return fetchPokemonDetail(name);
-    },
-    enabled: !!name,
+    queryFn: () => fetchPokemonDetail(name!),
     staleTime: 1000 * 60 * 5,
   });
 
-  if (!name) return <ErrorBox message="Ingen Pokémon vald" />;
   if (isLoading) return <Spinner />;
-  if (isError) return <ErrorBox message={error?.message || "Kunde inte ladda Pokémon"} />;
-  if (!data) return <ErrorBox message="Ingen data hittades" />;
+  if (isError || !data) return <ErrorBox message="Failed to load pokemons." />;
 
   const type = data.types[0]?.type.name || "normal";
   const colorClass = typeColors[type] || typeColors.normal;
-  const hp = getStat(data.stats, "hp");
-  const attack = getStat(data.stats, "attack");
-  const defense = getStat(data.stats, "defense");
+  const hp = data.stats.find((s) => s.stat.name === "hp")?.base_stat || 50;
+  const attack = data.stats.find((s) => s.stat.name === "attack")?.base_stat || 50;
+  const defense = data.stats.find((s) => s.stat.name === "defense")?.base_stat || 50;
 
   return (
     <div
@@ -63,10 +56,10 @@ export default function DetailPage() {
             </span>
           ))}
         </div>
-
         <Link
           to="/"
-          className="block text-center mt-6 btn-primary"
+          className="block text-center mt-6 btn-primary focus:outline-none focus:ring-4 focus:ring-brand-700"
+          aria-label="Tillbaka till pokémon-listan"
         >
           Tillbaka
         </Link>
