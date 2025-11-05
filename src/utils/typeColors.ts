@@ -1,0 +1,20 @@
+export const typeColors: Record<string, string> = {
+    grass: "from-green-200 to-green-400",
+    fire: "from-red-200 to-red-400",
+    water: "from-blue-200 to-blue-400",
+    electric: "from-yellow-200 to-yellow-400",
+    psychic: "from-pink-200 to-pink-400",
+    normal: "from-gray-200 to-gray-400",
+    poison: "from-purple-200 to-purple-400",
+    ground: "from-amber-200 to-amber-400",
+    rock: "from-stone-200 to-stone-400",
+    bug: "from-lime-200 to-lime-400",
+    ghost: "from-indigo-200 to-indigo-400",
+    dragon: "from-sky-200 to-sky-400",
+    ice: "from-cyan-200 to-cyan-400",
+    fairy: "from-fuchsia-200 to-fuchsia-400",
+    fighting: "from-orange-200 to-orange-400",
+    dark: "from-neutral-300 to-neutral-500",
+    steel: "from-slate-200 to-slate-400",
+};
+  

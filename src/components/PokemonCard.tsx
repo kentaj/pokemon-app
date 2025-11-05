@@ -1,39 +1,45 @@
 import { Link } from "react-router-dom";
-import type { PokemonListItem } from "../api/poke";
+import type { PokemonListItem, PokemonDetail } from "../api/poke";
+import { useQuery } from "@tanstack/react-query";
+import { fetchPokemonDetail } from "../api/poke";
+import { typeColors } from "../utils/typeColors";
 
 interface PokemonCardProps {
   pokemon: PokemonListItem;
 }
 
 export default function PokemonCard({ pokemon }: PokemonCardProps) {
-  const id = pokemon.url.split("/").filter(Boolean).pop();
-  const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+  const { data } = useQuery<PokemonDetail>({
+    queryKey: ["pokemon", pokemon.name],
+    queryFn: () => fetchPokemonDetail(pokemon.name),
+    staleTime: 1000 * 60 * 10,
+  });
+
+  if (!data) return null;
+
+  const imageUrl = data.sprites.front_default;
+  const type = data.types[0]?.type.name || "normal";
+  const colorClass = typeColors[type] || typeColors.normal;
+  const hp = data.stats.find((s) => s.stat.name === "hp")?.base_stat || 50;
 
   return (
     <Link
       to={`/pokemon/${pokemon.name}`}
-      className="flex flex-col items-center p-4 bg-[var(--color-brand-50)] rounded-xl shadow-md hover:shadow-lg transition-transform transform hover:scale-105 relative"
-      style={{ animation: "float 1.2s infinite" }}
+      className={`relative bg-gradient-to-b ${colorClass} rounded-2xl p-3 shadow-lg hover:scale-105 transition-transform`}
     >
-      <div className="absolute top-2 left-2 w-2 h-2 bg-[var(--color-brand-500)] rounded-full animate-bounce"></div>
-      <div className="absolute bottom-2 right-2 w-2 h-2 bg-[var(--color-brand-400)] rounded-full animate-bounce delay-200"></div>
-
-      <img
-        src={imageUrl}
-        alt={pokemon.name}
-        className="w-20 h-20 object-contain mb-2"
-      />
-      <h2 className="text-lg font-semibold capitalize">{pokemon.name}</h2>
-
-      <div className="flex gap-2 mt-2 flex-wrap justify-center">
-        {pokemon.types.map((t) => (
-          <span
-            key={t.type.name}
-            className="px-2 py-1 rounded-full text-sm capitalize bg-[var(--color-brand-100)]"
-          >
-            {t.type.name}
-          </span>
-        ))}
+      <div className="bg-white/90 rounded-xl p-3 flex flex-col items-center">
+        <div className="flex justify-between w-full text-xs font-bold text-gray-700 mb-1">
+          <span className="capitalize">{type}</span>
+          <span>HP {hp}</span>
+        </div>
+        <img
+          src={imageUrl}
+          alt={pokemon.name}
+          className="w-20 h-20 object-contain drop-shadow-md"
+        />
+        <h2 className="text-lg font-bold capitalize text-gray-900 mt-2">
+          {pokemon.name}
+        </h2>
       </div>
     </Link>
   );

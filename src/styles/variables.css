@@ -1,25 +1,15 @@
 :root {
-    --color-black: #000000;
-    --color-white: #ffffff;
-    --color-brand-50: #e5fff5;
-    --color-brand-100: #a3ffda;
-    --color-brand-200: #a3ffda;
-    --color-brand-300: #75ffc8;
-    --color-brand-400: #47ffb6;
-    --color-brand-500: #1affa3;
-    --color-brand-600: #7bffa3;
-    --color-brand-650: #00e88c;
-    --color-brand-700: #00ad68;
-    --color-brand-800: #007546;
-    --color-brand-900: #003822;
-    --color-brand-950: #001f12;
-    --color-alert-50: #fff6f0;
-  }
-
-
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0); }
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-brand-50: #f0fef8;
+  --color-brand-100: #dafbee;
+  --color-brand-200: #b6f5dd;
+  --color-brand-300: #8df0c9;
+  --color-brand-400: #64eab5;
+  --color-brand-500: #3de29f;
+  --color-brand-600: #32c78a;
+  --color-brand-700: #27aa70;
+  --color-brand-800: #1d8c57;
+  --color-brand-900: #125b35;
+  --color-alert-50: #fff6f0;
 }
-  
