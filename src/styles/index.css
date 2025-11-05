@@ -2,26 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+@layer base {
+  body {
+    background: linear-gradient(135deg, #f0fef8, #b6f5dd);
+  }
 }
 
-@keyframes bounceFast {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+@layer utilities {
+  @keyframes float {
+    0%, 100% { 
+      transform: translateY(0); 
+    }
+    50% { 
+      transform: translateY(-6px); 
+    }
+  }
+  
+  .animate-float { 
+    animation: float 2s ease-in-out infinite; 
+  }
 }
-
-.animate-float { animation: float 2s ease-in-out infinite; }
-.animate-bounceFast { animation: bounceFast 0.8s infinite; }
 
 @layer components {
   .btn-primary {
-    @apply px-4 py-2 rounded-lg font-semibold text-white shadow transition;
-    background-color: theme('colors.brand.500');
-  }
-
-  .btn-primary:hover {
-    background-color: theme('colors.brand.600');
+    @apply px-4 py-2 rounded-lg font-semibold text-white shadow transition bg-brand-500 hover:bg-brand-600;
   }
 }

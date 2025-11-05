@@ -5,14 +5,14 @@ import Spinner from "../components/Spinner";
 import ErrorBox from "../components/ErrorBox";
 
 export default function ListPage() {
-  const { data, isLoading, isError } = useQuery<PokemonListItem[]>({
+  const { data, isLoading, isError, error } = useQuery<PokemonListItem[], Error>({
     queryKey: ["gen1-list"],
     queryFn: fetchGen1List,
     staleTime: 1000 * 60 * 5,
   });
 
   if (isLoading) return <Spinner />;
-  if (isError) return <ErrorBox message="Couldnt load the page" />;
+  if (isError) return <ErrorBox message={error?.message || "Kunde inte ladda Pokémon-listan"} />;
 
   return (
     <div className="max-w-5xl mx-auto p-4 bg-gradient-to-br min-h-screen">

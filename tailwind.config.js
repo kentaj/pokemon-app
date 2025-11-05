@@ -1,45 +1,29 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
 export default {
   content: [
+    "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       colors: {
         brand: {
-          50: '#e5fff5',
-          100: '#a3ffda',
-          200: '#a3ffda',
-          300: '#75ffc8',
-          400: '#47ffb6',
-          500: '#1affa3',
-          600: '#7bffa3',
-          650: '#00e88c',
-          700: '#00ad68',
-          800: '#007546',
-          900: '#003822',
-          950: '#001f12',
+          50: '#f0fef8',
+          100: '#dafbee',
+          200: '#b6f5dd',
+          300: '#8df0c9',
+          400: '#64eab5',
+          500: '#3de29f',
+          600: '#32c78a',
+          700: '#27aa70',
+          800: '#1d8c57',
+          900: '#125b35',
         },
         alert: {
           50: '#fff6f0',
-        },
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-6px)' },
-        },
-        bounceFast: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-      },
-      animation: {
-        float: 'float 2s ease-in-out infinite',
-        bounceFast: 'bounceFast 0.8s infinite',
-      },
-    },
+        }
+      }
+    }
   },
   plugins: [],
-};
+}
